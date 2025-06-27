@@ -71,7 +71,7 @@ struct StreamConfigurationView: View {
 
     var isEditable = true
 
-    // show system prompt and user prompt, according to service.enableCustomPrompt
+    // show system prompt and user prompt, according to service.enableCustomPromptKey
     @Default var showCustomPromptTextEditor: Bool
 
     var body: some View {
@@ -158,13 +158,16 @@ struct StreamConfigurationView: View {
                     key: service.translationKey
                 )
             }
-            if showSentenceToggle {
+
+            // Hide sentence and dictionary toggles when custom prompt is enabled as they do not have any effect in this mode.
+            if showSentenceToggle && !showCustomPromptTextEditor {
                 StringToggleCell(
                     titleKey: "service.configuration.openai.sentence.title",
                     key: service.sentenceKey
                 )
             }
-            if showDictionaryToggle {
+
+            if showDictionaryToggle && !showCustomPromptTextEditor {
                 StringToggleCell(
                     titleKey: "service.configuration.openai.dictionary.title",
                     key: service.dictionaryKey
